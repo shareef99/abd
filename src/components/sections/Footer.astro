@@ -1,0 +1,121 @@
+---
+import Logo from "../ui/Logo.astro";
+import Icon from "../ui/Icon.astro";
+import { footer, site } from "../../lib/content";
+const year = 2026;
+---
+
+<footer class="relative overflow-hidden bg-ink text-paper">
+  <div class="grain pointer-events-none absolute inset-0 opacity-20"></div>
+  <!-- ambient glow -->
+  <div
+    class="pointer-events-none absolute -top-40 left-1/2 size-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.16),transparent_60%)]"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-5 pt-20 sm:px-8">
+    <div class="grid gap-12 pb-16 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div data-reveal>
+        <Logo variant="light" />
+        <p class="mt-6 max-w-xs text-pretty text-sm leading-relaxed text-paper/60">
+          Innovative floor plans and building designs — crafting homes and commercial spaces across
+          Hyderabad with excellence, precision and trust.
+        </p>
+        <div class="mt-7 flex gap-2.5">
+          {
+            footer.social.map((s) => (
+              <a
+                href={s.href}
+                aria-label={s.label}
+                class="grid size-10 place-items-center rounded-full border border-paper/15 text-paper/70 transition-all duration-300 hover:border-bronze hover:bg-bronze hover:text-ink"
+              >
+                <Icon name={s.icon} class="size-[1.05rem]" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.05">
+        <h4 class="eyebrow text-bronze-light">Explore</h4>
+        <ul class="mt-5 space-y-3 text-sm">
+          {
+            footer.quickLinks.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="group inline-flex items-center gap-1.5 text-paper/65 transition-colors hover:text-paper"
+                >
+                  <span class="h-px w-0 bg-bronze transition-all duration-300 group-hover:w-4" />
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.1">
+        <h4 class="eyebrow text-bronze-light">Services</h4>
+        <ul class="mt-5 space-y-3 text-sm">
+          {
+            footer.services.map((s) => (
+              <li>
+                <a
+                  href="/services"
+                  class="group inline-flex items-center gap-1.5 text-paper/65 transition-colors hover:text-paper"
+                >
+                  <span class="h-px w-0 bg-bronze transition-all duration-300 group-hover:w-4" />
+                  {s}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.15">
+        <h4 class="eyebrow text-bronze-light">Get in touch</h4>
+        <ul class="mt-5 space-y-4 text-sm text-paper/65">
+          <li class="flex items-start gap-3">
+            <Icon name="pin" class="mt-0.5 size-4 shrink-0 text-bronze-light" />
+            <span>{site.location}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="phone" class="mt-0.5 size-4 shrink-0 text-bronze-light" />
+            <a href={`tel:${site.phone}`} class="hover:text-paper">{site.phone}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="mail" class="mt-0.5 size-4 shrink-0 text-bronze-light" />
+            <a href={`mailto:${site.email}`} class="hover:text-paper">{site.email}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="globe" class="mt-0.5 size-4 shrink-0 text-bronze-light" />
+            <span>{site.web}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- giant watermark -->
+    <div
+      class="pointer-events-none select-none border-t border-paper/10 pt-10"
+      aria-hidden="true"
+    >
+      <p
+        class="font-display text-[15vw] leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1.5px_rgba(231,201,143,0.38)]"
+      >
+        NZ Constructions
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center justify-between gap-4 border-t border-paper/10 py-7 text-xs text-paper/45 sm:flex-row"
+    >
+      <p>© {year} NZ Constructions. All Rights Reserved.</p>
+      <p class="flex items-center gap-2">
+        Crafted with <span class="text-bronze-light">precision</span> in Hyderabad, India
+      </p>
+    </div>
+  </div>
+</footer>

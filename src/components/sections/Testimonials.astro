@@ -1,0 +1,24 @@
+---
+import TestimonialsCarousel from "../react/TestimonialsCarousel.tsx";
+import { testimonials } from "../../lib/content";
+---
+
+<section class="section relative overflow-hidden">
+  <div
+    class="pointer-events-none absolute left-1/2 top-1/2 size-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.10),transparent_65%)]"
+  >
+  </div>
+
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="mb-20 text-center" data-reveal>
+      <p class="eyebrow text-bronze-dark">Client stories</p>
+      <h2 data-split class="mx-auto mt-5 max-w-2xl font-display display-md text-charcoal">
+        Loved by the families we build for.
+      </h2>
+    </div>
+
+    <div data-reveal data-reveal-delay="0.1">
+      <TestimonialsCarousel items={testimonials} client:visible />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,71 @@
+---
+import Icon from "./Icon.astro";
+/**
+ * Apple-style pill button with a sliding fill + nudging arrow.
+ * variants: primary (charcoal), light (paper on dark), outline, ghost
+ */
+interface Props {
+  href?: string;
+  label: string;
+  variant?: "primary" | "light" | "outline" | "ghost";
+  icon?: string | null;
+  magnetic?: boolean;
+  class?: string;
+  type?: "button" | "submit";
+}
+const {
+  href,
+  label,
+  variant = "primary",
+  icon = "arrow-right",
+  magnetic = true,
+  class: className = "",
+  type = "button",
+} = Astro.props;
+
+const base =
+  "group/btn relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full px-7 py-3.5 text-sm font-medium tracking-tight transition-colors duration-300 will-change-transform";
+
+const variants: Record<string, string> = {
+  primary: "bg-charcoal text-paper",
+  light: "bg-paper text-charcoal",
+  outline: "border border-charcoal/20 text-charcoal hover:border-transparent",
+  ghost: "text-charcoal hover:text-bronze-dark",
+};
+
+const fill: Record<string, string> = {
+  primary: "bg-bronze",
+  light: "bg-bronze",
+  outline: "bg-charcoal",
+  ghost: "bg-transparent",
+};
+const hoverText: Record<string, string> = {
+  primary: "group-hover/btn:text-charcoal",
+  light: "group-hover/btn:text-paper",
+  outline: "group-hover/btn:text-paper",
+  ghost: "",
+};
+
+const Tag = href ? "a" : "button";
+const dataMag = magnetic ? "0.35" : undefined;
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  class={`${base} ${variants[variant]} ${className}`}
+  data-magnetic={dataMag}
+>
+  <!-- sliding fill -->
+  {variant !== "ghost" && (
+    <span
+      class={`absolute inset-0 -z-0 translate-y-full rounded-full ${fill[variant]} transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-y-0`}
+    />
+  )}
+  <span class={`relative z-10 transition-colors duration-300 ${hoverText[variant]}`}>{label}</span>
+  {icon && (
+    <span class={`relative z-10 transition-all duration-300 ${hoverText[variant]} group-hover/btn:translate-x-1`}>
+      <Icon name={icon} class="size-4" />
+    </span>
+  )}
+</Tag>

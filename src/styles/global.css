@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   NZ CONSTRUCTIONS — Design System
+   Palette + type extracted from the inspiration board (warm ivory / charcoal /
+   bronze), with the logo's electric blue + clay-orange reserved as accents.
+---------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces */
+  --color-ivory: #f5f2ea;
+  --color-cream: #ece5d8;
+  --color-sand: #ddd2bd;
+  --color-paper: #fbf9f4;
+
+  /* Ink */
+  --color-charcoal: #16150f;
+  --color-ink: #0b0a07;
+  --color-graphite: #2a2820;
+  --color-smoke: #6b675a;
+
+  /* Bronze accent (primary brand accent) */
+  --color-bronze: #b08d57;
+  --color-bronze-light: #cda972;
+  --color-bronze-dark: #876a3c;
+  --color-gilt: #e7c98f;
+
+  /* Logo-derived energy accents (used sparingly for "funky" moments) */
+  --color-azure: #2f7fd6;
+  --color-azure-deep: #1c4fa3;
+  --color-clay: #ff8a4c;
+  --color-ember: #ff6a3d;
+
+  /* Type */
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii */
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.75rem;
+
+  /* Motion tokens */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  /* Custom animations */
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-rev: marquee-rev 38s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spin-slow: spin 26s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-gradient: gradient-pan 9s ease infinite;
+  --animate-pulse-ring: pulse-ring 2.6s var(--ease-out-expo) infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  80%, 100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+---------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis owns smooth scrolling */
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01", "cv11";
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-bronze);
+    color: var(--color-paper);
+  }
+
+  /* Refined scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-cream); }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-bronze) 70%, var(--color-charcoal));
+    border-radius: 999px;
+    border: 2px solid var(--color-cream);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Variable-font optical sizing for the editorial serif */
+  .font-display {
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Lenis smooth scroll (recommended baseline)
+---------------------------------------------------------------------------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* ----------------------------------------------------------------------------
+   Component utilities
+---------------------------------------------------------------------------- */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Frosted glass panel */
+  .glass {
+    background: color-mix(in oklab, var(--color-paper) 62%, transparent);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid color-mix(in oklab, white 55%, transparent);
+  }
+  .glass-dark {
+    background: color-mix(in oklab, var(--color-ink) 52%, transparent);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border: 1px solid color-mix(in oklab, white 12%, transparent);
+  }
+
+  /* Bronze gradient text */
+  .text-gradient-bronze {
+    background: linear-gradient(100deg, var(--color-bronze-dark), var(--color-gilt) 45%, var(--color-bronze));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-energy {
+    background: linear-gradient(100deg, var(--color-azure), var(--color-clay));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Animated conic/gradient border */
+  .ring-gilt {
+    box-shadow:
+      0 1px 0 0 color-mix(in oklab, white 60%, transparent) inset,
+      0 0 0 1px color-mix(in oklab, var(--color-bronze) 35%, transparent);
+  }
+
+  /* Hairline divider */
+  .hairline { border-color: color-mix(in oklab, var(--color-charcoal) 12%, transparent); }
+  .hairline-light { border-color: color-mix(in oklab, white 14%, transparent); }
+
+  /* Soft luxury shadow */
+  .shadow-luxe {
+    box-shadow:
+      0 1px 1px rgba(22, 21, 15, 0.04),
+      0 8px 24px -12px rgba(22, 21, 15, 0.18),
+      0 40px 80px -40px rgba(22, 21, 15, 0.28);
+  }
+  .shadow-luxe-dark {
+    box-shadow:
+      0 10px 30px -12px rgba(0, 0, 0, 0.6),
+      0 50px 90px -50px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Film grain overlay */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  }
+
+  /* Marquee track */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Section vertical rhythm */
+  .section { padding-block: clamp(5rem, 12vh, 11rem); }
+
+  /* Fluid display sizing */
+  .display-xl { font-size: clamp(2.75rem, 9vw, 9.5rem); line-height: 0.92; }
+  .display-lg { font-size: clamp(2.25rem, 6.5vw, 6rem); line-height: 0.98; }
+  .display-md { font-size: clamp(1.9rem, 4.5vw, 3.75rem); line-height: 1.04; }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Custom cursor visibility helper */
+  @media (hover: hover) and (pointer: fine) {
+    .cursor-none-fine { cursor: none; }
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   GSAP reveal scaffolding
+   Default = visible (no-JS friendly). motion.ts sets the hidden initial state
+   only when JS runs, then animates in — so there's never a blank page.
+---------------------------------------------------------------------------- */
+[data-reveal],
+[data-reveal-stagger] > * {
+  will-change: transform, opacity;
+}
+
+/* Custom cursor element */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid color-mix(in oklab, var(--color-bronze) 80%, transparent);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate3d(-100px, -100px, 0);
+  transition: width 0.25s var(--ease-out-expo), height 0.25s var(--ease-out-expo),
+    background-color 0.25s ease, border-color 0.25s ease;
+}
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--color-bronze);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(-100px, -100px, 0);
+}
+.cursor-ring.is-hover {
+  width: 76px;
+  height: 76px;
+  background: color-mix(in oklab, var(--color-bronze) 16%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-ring, .cursor-dot { display: none; }
+}

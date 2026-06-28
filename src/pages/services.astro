@@ -1,0 +1,133 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import CTA from "../components/sections/CTA.astro";
+import Icon from "../components/ui/Icon.astro";
+import Button from "../components/ui/Button.astro";
+import { serviceDetails, services } from "../lib/content";
+---
+
+<Base title="Services & Pricing — NZ Constructions">
+  <PageHeader
+    eyebrow="Services & Pricing"
+    crumb="Services"
+    title="Transparent pricing for every stage of your build."
+    sub="From a single floor plan to a turnkey structure — clear, itemised packages with no hidden costs. Choose a plan, or talk to us for a custom quote."
+  />
+
+  <!-- quick service chips -->
+  <section class="px-5 pb-4 sm:px-8">
+    <div data-reveal-stagger class="mx-auto flex max-w-7xl flex-wrap gap-2.5">
+      {
+        services.map((s) => (
+          <span class="inline-flex items-center gap-2 rounded-full border border-charcoal/10 bg-paper/70 px-4 py-2 text-sm text-charcoal">
+            <Icon name={s.icon} class="size-4 text-bronze-dark" />
+            {s.title}
+          </span>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    serviceDetails.map((service, idx) => (
+      <section class="section !py-16">
+        <div class="mx-auto max-w-7xl px-5 sm:px-8">
+          <div class="grid gap-10 lg:grid-cols-[0.85fr_1.6fr] lg:gap-16">
+            <!-- info -->
+            <div class="lg:sticky lg:top-32 lg:h-fit">
+              <div class="flex items-center gap-3">
+                <span class="grid size-12 place-items-center rounded-2xl bg-charcoal text-paper">
+                  <Icon name={service.icon} class="size-6" />
+                </span>
+                <span class="font-display text-5xl text-charcoal/10">0{idx + 1}</span>
+              </div>
+              <h2 data-reveal class="mt-6 font-display text-3xl text-charcoal sm:text-4xl">
+                {service.title}
+              </h2>
+              <p data-reveal data-reveal-delay="0.05" class="mt-4 text-pretty text-smoke">
+                {service.description}
+              </p>
+              {service.deliverables && (
+                <ul data-reveal data-reveal-delay="0.1" class="mt-7 space-y-2.5">
+                  {service.deliverables.map((d) => (
+                    <li class="flex items-center gap-3 text-sm text-charcoal">
+                      <span class="grid size-5 place-items-center rounded-full bg-bronze/15 text-bronze-dark">
+                        <Icon name="check" class="size-3.5" stroke={2} />
+                      </span>
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <!-- plans -->
+            <div data-reveal-stagger class="grid gap-4 sm:grid-cols-3">
+              {service.plans.map((plan) => (
+                <article
+                  data-tilt="4"
+                  class:list={[
+                    "group relative flex flex-col overflow-hidden rounded-3xl border p-6 transition-all duration-500",
+                    plan.featured
+                      ? "border-transparent bg-ink text-paper shadow-luxe-dark"
+                      : "border-charcoal/10 bg-paper hover:border-bronze/40 hover:shadow-luxe",
+                  ]}
+                >
+                  {plan.featured && (
+                    <span class="absolute right-4 top-4 rounded-full bg-bronze px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-ink">
+                      Popular
+                    </span>
+                  )}
+                  <h3
+                    class:list={[
+                      "text-sm font-medium uppercase tracking-wider",
+                      plan.featured ? "text-bronze-light" : "text-smoke",
+                    ]}
+                  >
+                    {plan.name}
+                  </h3>
+                  <div class="mt-3 font-display text-4xl tracking-tight">{plan.price}</div>
+                  {plan.note && (
+                    <p class:list={["mt-1 text-xs", plan.featured ? "text-paper/50" : "text-smoke"]}>
+                      {plan.note}
+                    </p>
+                  )}
+                  <ul class="mt-6 flex-1 space-y-3 text-sm">
+                    {plan.features.map((f) => (
+                      <li class="flex items-start gap-2.5">
+                        <span
+                          class:list={[
+                            "mt-0.5 grid size-4 shrink-0 place-items-center rounded-full",
+                            plan.featured ? "bg-bronze text-ink" : "bg-bronze/15 text-bronze-dark",
+                          ]}
+                        >
+                          <Icon name="check" class="size-3" stroke={2.2} />
+                        </span>
+                        <span class={plan.featured ? "text-paper/80" : "text-charcoal"}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href="/contact"
+                    class:list={[
+                      "mt-7 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-colors duration-300",
+                      plan.featured
+                        ? "bg-paper text-ink hover:bg-bronze"
+                        : "bg-charcoal text-paper hover:bg-bronze hover:text-ink",
+                    ]}
+                  >
+                    Choose {plan.name}
+                    <Icon name="arrow-right" class="size-4" />
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CTA title="Not sure which plan fits?" sub="Tell us about your project and we'll recommend the right package — or build a custom quote around your exact needs." />
+</Base>

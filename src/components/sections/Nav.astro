@@ -1,0 +1,147 @@
+---
+import Logo from "../ui/Logo.astro";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import { nav, site } from "../../lib/content";
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header
+  data-nav
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+>
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+    <div
+      data-nav-shell
+      class="flex w-full items-center justify-between rounded-full px-3 py-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+    >
+      <Logo class="pl-2" />
+
+      <ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  "relative rounded-full px-4 py-2 text-sm tracking-tight transition-colors duration-300",
+                  isActive(item.href) ? "text-charcoal" : "text-smoke hover:text-charcoal",
+                ]}
+              >
+                {isActive(item.href) && (
+                  <span class="absolute inset-0 -z-10 rounded-full bg-charcoal/[0.06]" />
+                )}
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="flex items-center gap-2 pr-1">
+        <Button
+          href="/contact"
+          label="Let's Talk"
+          icon="arrow-up-right"
+          variant="primary"
+          class="hidden sm:inline-flex !px-5 !py-2.5 text-[0.82rem]"
+        />
+        <button
+          type="button"
+          data-menu-open
+          aria-label="Open menu"
+          class="grid size-11 place-items-center rounded-full bg-charcoal/[0.06] text-charcoal transition-colors hover:bg-charcoal/10 lg:hidden"
+        >
+          <Icon name="menu" class="size-5" />
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile overlay -->
+<div
+  data-menu
+  class="fixed inset-0 z-[60] translate-y-[-100%] bg-ink text-paper transition-transform duration-700 ease-[cubic-bezier(0.83,0,0.17,1)] lg:hidden"
+>
+  <div class="grain pointer-events-none absolute inset-0 opacity-30"></div>
+  <div class="relative flex h-full flex-col px-6 py-6">
+    <div class="flex items-center justify-between">
+      <Logo variant="light" />
+      <button
+        type="button"
+        data-menu-close
+        aria-label="Close menu"
+        class="grid size-11 place-items-center rounded-full bg-paper/10 text-paper transition-colors hover:bg-paper/20"
+      >
+        <Icon name="close" class="size-5" />
+      </button>
+    </div>
+
+    <ul class="mt-auto flex flex-col gap-2">
+      {
+        [{ label: "Home", href: "/" }, ...nav].map((item, i) => (
+          <li class="overflow-hidden border-b border-paper/10">
+            <a
+              href={item.href}
+              data-menu-link
+              style={`--i:${i}`}
+              class="flex items-center justify-between py-4 font-display text-4xl tracking-tight text-paper/90 transition-colors hover:text-bronze-light sm:text-5xl"
+            >
+              {item.label}
+              <Icon name="arrow-up-right" class="size-6 text-bronze-light" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-auto flex flex-col gap-3 pt-8 text-sm text-paper/60">
+      <a href={`tel:${site.phone}`} class="flex items-center gap-3 hover:text-paper">
+        <Icon name="phone" class="size-4 text-bronze-light" />{site.phone}
+      </a>
+      <a href={`mailto:${site.email}`} class="flex items-center gap-3 hover:text-paper">
+        <Icon name="mail" class="size-4 text-bronze-light" />{site.email}
+      </a>
+      <p class="flex items-center gap-3">
+        <Icon name="pin" class="size-4 text-bronze-light" />{site.location}
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  [data-nav].is-scrolled [data-nav-shell] {
+    background: color-mix(in oklab, var(--color-paper) 62%, transparent);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid color-mix(in oklab, white 55%, transparent);
+    box-shadow: 0 12px 40px -22px rgba(22, 21, 15, 0.45);
+  }
+  [data-nav].is-scrolled nav {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+  [data-menu].is-open {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  const menu = document.querySelector("[data-menu]");
+  const openBtn = document.querySelector("[data-menu-open]");
+  const closeBtn = document.querySelector("[data-menu-close]");
+  const links = document.querySelectorAll("[data-menu-link]");
+  const open = () => {
+    menu?.classList.add("is-open");
+    document.documentElement.style.overflow = "hidden";
+  };
+  const close = () => {
+    menu?.classList.remove("is-open");
+    document.documentElement.style.overflow = "";
+  };
+  openBtn?.addEventListener("click", open);
+  closeBtn?.addEventListener("click", close);
+  links.forEach((l) => l.addEventListener("click", close));
+</script>

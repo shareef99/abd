@@ -1,0 +1,53 @@
+---
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/inter";
+import "../styles/global.css";
+import Nav from "../components/sections/Nav.astro";
+import Footer from "../components/sections/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "NZ Constructions — Building Dreams with Excellence, Precision & Trust",
+  description = "NZ Constructions is a trusted construction & architectural design company in Hyderabad, India. 200+ homes built, 100+ designs delivered, 15+ years of experience.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#16150f" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body class="grain min-h-screen antialiased">
+    <!-- scroll progress -->
+    <div class="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[3px]">
+      <div
+        data-progress
+        class="h-full origin-left scale-x-0 bg-gradient-to-r from-bronze-dark via-gilt to-bronze"
+      >
+      </div>
+    </div>
+
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import "../scripts/motion.ts";
+    </script>
+  </body>
+</html>

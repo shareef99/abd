@@ -1,0 +1,51 @@
+---
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import { site } from "../../lib/content";
+interface Props {
+  title?: string;
+  sub?: string;
+}
+const {
+  title = "Ready to build your dream?",
+  sub = "Book a free consultation with our architects and engineers. No obligations — just expert guidance for your next build.",
+} = Astro.props;
+---
+
+<section class="relative px-5 pb-20 sm:px-8">
+  <div
+    data-scale-in
+    class="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-ink px-6 py-20 text-center text-paper sm:px-12 sm:py-28"
+  >
+    <div class="grain pointer-events-none absolute inset-0 opacity-20"></div>
+    <!-- animated gradient blobs -->
+    <div
+      class="pointer-events-none absolute -left-20 top-0 size-[34rem] animate-float rounded-full bg-[radial-gradient(circle,rgba(47,127,214,0.25),transparent_60%)]"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute -right-20 bottom-0 size-[34rem] rounded-full bg-[radial-gradient(circle,rgba(255,138,76,0.22),transparent_60%)]"
+      style="animation: float 9s ease-in-out infinite reverse"
+    >
+    </div>
+
+    <div class="relative mx-auto max-w-3xl">
+      <span
+        data-reveal
+        class="inline-flex items-center gap-2 rounded-full border border-paper/15 px-4 py-2 text-xs uppercase tracking-[0.2em] text-bronze-light"
+      >
+        <Icon name="sparkle" class="size-4" /> Free consultation
+      </span>
+      <h2 data-split class="mx-auto mt-7 font-display display-lg">
+        {title}
+      </h2>
+      <p data-reveal data-reveal-delay="0.1" class="mx-auto mt-6 max-w-xl text-pretty text-paper/65">
+        {sub}
+      </p>
+      <div data-reveal data-reveal-delay="0.15" class="mt-10 flex flex-wrap justify-center gap-3">
+        <Button href="/contact" label="Get free consultation" variant="light" />
+        <Button href={`tel:${site.phone}`} label="Call us now" variant="outline" icon="phone" class="border-paper/25 !text-paper hover:!text-ink" />
+      </div>
+    </div>
+  </div>
+</section>

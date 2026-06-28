@@ -1,0 +1,139 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import CTA from "../components/sections/CTA.astro";
+import Icon from "../components/ui/Icon.astro";
+import { about, stats, whyChoose } from "../lib/content";
+---
+
+<Base title="About — NZ Constructions">
+  <PageHeader
+    eyebrow={about.eyebrow}
+    crumb="About"
+    title="Trusted builders of homes and landmarks in Hyderabad."
+    sub={about.who}
+  />
+
+  <!-- achievements band -->
+  <section class="px-5 sm:px-8">
+    <div
+      data-reveal-stagger
+      class="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden rounded-[2rem] bg-charcoal/10 lg:grid-cols-4"
+    >
+      {
+        stats.map((s) => (
+          <div class="bg-paper px-6 py-10 text-center">
+            <span class="mx-auto grid size-12 place-items-center rounded-full bg-bronze/15 text-bronze-dark">
+              <Icon name={s.icon} class="size-6" />
+            </span>
+            <div class="mt-4 font-display text-4xl text-charcoal sm:text-5xl">
+              <span data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</span>
+            </div>
+            <div class="mt-2 text-sm text-smoke">{s.label}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- mission / vision -->
+  <section class="section">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid gap-5 lg:grid-cols-2">
+        <article data-reveal class="relative overflow-hidden rounded-[2rem] bg-ink p-9 text-paper sm:p-12">
+          <div class="grain pointer-events-none absolute inset-0 opacity-20"></div>
+          <div class="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-[radial-gradient(circle,rgba(47,127,214,0.3),transparent_60%)]"></div>
+          <span class="relative grid size-12 place-items-center rounded-2xl bg-paper/10 text-bronze-light">
+            <Icon name="compass" class="size-6" />
+          </span>
+          <h2 class="relative mt-6 font-display text-3xl">Our Mission</h2>
+          <p class="relative mt-4 text-pretty leading-relaxed text-paper/65">{about.mission}</p>
+        </article>
+
+        <article data-reveal data-reveal-delay="0.08" class="relative overflow-hidden rounded-[2rem] border border-charcoal/10 bg-paper p-9 sm:p-12">
+          <div class="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.18),transparent_60%)]"></div>
+          <span class="relative grid size-12 place-items-center rounded-2xl bg-charcoal text-bronze-light">
+            <Icon name="sparkle" class="size-6" />
+          </span>
+          <h2 class="relative mt-6 font-display text-3xl text-charcoal">Our Vision</h2>
+          <p class="relative mt-4 text-pretty leading-relaxed text-smoke">{about.vision}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- values (reuse why-choose) -->
+  <section class="section !pt-0">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="mb-12 max-w-xl">
+        <p data-reveal class="eyebrow text-bronze-dark">What drives us</p>
+        <h2 data-split class="mt-5 font-display display-md text-charcoal">The values behind every build.</h2>
+      </div>
+      <div data-reveal-stagger class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          whyChoose.items.map((item) => (
+            <div data-tilt="6" class="rounded-3xl border border-charcoal/10 bg-paper/70 p-7">
+              <span class="grid size-12 place-items-center rounded-2xl bg-charcoal text-paper">
+                <Icon name={item.icon} class="size-6" />
+              </span>
+              <h3 class="mt-5 font-display text-lg text-charcoal">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-smoke">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- brand + working hours -->
+  <section class="section !pt-0">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid items-center gap-10 lg:grid-cols-2">
+        <div
+          data-reveal
+          class="relative overflow-hidden rounded-[2rem] border border-charcoal/10 bg-ink p-8 text-center"
+        >
+          <img
+            src="/images/logo.png"
+            alt="NZ Constructions logo"
+            class="mx-auto w-full max-w-sm rounded-2xl"
+            loading="lazy"
+          />
+        </div>
+
+        <div data-reveal data-reveal-delay="0.08">
+          <p class="eyebrow text-bronze-dark">Visit / call us</p>
+          <h2 class="mt-5 font-display text-3xl text-charcoal sm:text-4xl">Working hours</h2>
+          <p class="mt-3 text-smoke">We're here to help plan your project — drop by or give us a call.</p>
+          <div class="mt-7 space-y-3">
+            {
+              about.hours.map((h) => (
+                <div class="flex items-center justify-between rounded-2xl border border-charcoal/10 bg-paper/60 px-5 py-4">
+                  <span class="flex items-center gap-3 font-medium text-charcoal">
+                    <Icon name="clock" class="size-5 text-bronze-dark" />
+                    {h.day}
+                  </span>
+                  <span class="text-smoke">{h.time}</span>
+                </div>
+              ))
+            }
+          </div>
+          <ul class="mt-6 space-y-2.5">
+            {
+              about.achievements.map((a) => (
+                <li class="flex items-center gap-3 text-sm text-charcoal">
+                  <span class="grid size-5 place-items-center rounded-full bg-bronze/15 text-bronze-dark">
+                    <Icon name="check" class="size-3.5" stroke={2} />
+                  </span>
+                  {a}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</Base>

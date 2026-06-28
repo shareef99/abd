@@ -1,0 +1,181 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import Icon from "../components/ui/Icon.astro";
+import { site, contactForm, footer } from "../lib/content";
+
+const info = [
+  { icon: "pin", label: "Location", value: site.location, href: "https://www.google.com/maps?q=Hyderabad" },
+  { icon: "phone", label: "Phone", value: site.phone, href: `tel:${site.phone}` },
+  { icon: "mail", label: "Email", value: site.email, href: `mailto:${site.email}` },
+  { icon: "globe", label: "Website", value: site.web, href: "#" },
+];
+---
+
+<Base title="Contact — NZ Constructions">
+  <PageHeader
+    eyebrow="Contact Us"
+    crumb="Contact"
+    title="Let's talk about your project."
+    sub="Tell us what you're planning and we'll get back to you within one business day with expert guidance — and a free consultation."
+  />
+
+  <section class="section !pt-4">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid gap-6 lg:grid-cols-[1fr_1.3fr] lg:gap-10">
+        <!-- info column -->
+        <div class="flex flex-col gap-5">
+          <div data-reveal-stagger class="grid gap-4 sm:grid-cols-2">
+            {
+              info.map((item) => (
+                <a
+                  href={item.href}
+                  class="group rounded-3xl border border-charcoal/10 bg-paper/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-bronze/40 hover:shadow-luxe"
+                >
+                  <span class="grid size-12 place-items-center rounded-2xl bg-charcoal text-bronze-light transition-colors group-hover:bg-bronze group-hover:text-ink">
+                    <Icon name={item.icon} class="size-5" />
+                  </span>
+                  <div class="mt-4 text-xs uppercase tracking-wider text-smoke">{item.label}</div>
+                  <div class="mt-1 break-words font-medium text-charcoal">{item.value}</div>
+                </a>
+              ))
+            }
+          </div>
+
+          <!-- map -->
+          <div data-reveal class="relative overflow-hidden rounded-3xl border border-charcoal/10 bg-cream">
+            <iframe
+              title="NZ Constructions location — Hyderabad"
+              src="https://www.google.com/maps?q=Hyderabad,Telangana,India&z=11&output=embed"
+              loading="lazy"
+              class="h-64 w-full grayscale-[0.3]"
+              style="border:0"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <!-- socials -->
+          <div data-reveal class="flex items-center gap-3 rounded-3xl bg-ink p-5 text-paper">
+            <span class="text-sm text-paper/60">Follow us</span>
+            <div class="ml-auto flex gap-2">
+              {
+                footer.social.map((s) => (
+                  <a
+                    href={s.href}
+                    aria-label={s.label}
+                    class="grid size-10 place-items-center rounded-full border border-paper/15 text-paper/70 transition-all hover:border-bronze hover:bg-bronze hover:text-ink"
+                  >
+                    <Icon name={s.icon} class="size-[1.05rem]" />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- form -->
+        <div data-reveal class="relative overflow-hidden rounded-[2rem] border border-charcoal/10 bg-paper p-7 shadow-luxe sm:p-10">
+          <div class="pointer-events-none absolute -right-20 -top-20 size-56 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.16),transparent_60%)]"></div>
+          <h2 class="font-display text-3xl text-charcoal">Request a consultation</h2>
+          <p class="mt-2 text-sm text-smoke">Fields marked with * are required.</p>
+
+          <form data-contact-form class="mt-8 grid gap-5 sm:grid-cols-2">
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-charcoal">Full Name *</span>
+              <input
+                required
+                name="name"
+                type="text"
+                placeholder="Your name"
+                class="rounded-xl border border-charcoal/15 bg-ivory/60 px-4 py-3 text-charcoal outline-none transition-colors placeholder:text-smoke/60 focus:border-bronze focus:bg-paper"
+              />
+            </label>
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-charcoal">Phone Number *</span>
+              <input
+                required
+                name="phone"
+                type="tel"
+                placeholder="+91 ..."
+                class="rounded-xl border border-charcoal/15 bg-ivory/60 px-4 py-3 text-charcoal outline-none transition-colors placeholder:text-smoke/60 focus:border-bronze focus:bg-paper"
+              />
+            </label>
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-charcoal">Email Address *</span>
+              <input
+                required
+                name="email"
+                type="email"
+                placeholder="you@email.com"
+                class="rounded-xl border border-charcoal/15 bg-ivory/60 px-4 py-3 text-charcoal outline-none transition-colors placeholder:text-smoke/60 focus:border-bronze focus:bg-paper"
+              />
+            </label>
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-charcoal">Service Required</span>
+              <select
+                name="service"
+                class="rounded-xl border border-charcoal/15 bg-ivory/60 px-4 py-3 text-charcoal outline-none transition-colors focus:border-bronze focus:bg-paper"
+              >
+                <option value="">Select a service</option>
+                {contactForm.serviceOptions.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label class="flex flex-col gap-2 text-sm sm:col-span-2">
+              <span class="font-medium text-charcoal">Message</span>
+              <textarea
+                name="message"
+                rows="4"
+                placeholder="Tell us about your project..."
+                class="resize-none rounded-xl border border-charcoal/15 bg-ivory/60 px-4 py-3 text-charcoal outline-none transition-colors placeholder:text-smoke/60 focus:border-bronze focus:bg-paper"
+              ></textarea>
+            </label>
+
+            <button
+              type="submit"
+              data-magnetic="0.25"
+              class="group/btn relative col-span-full mt-1 inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full bg-charcoal px-7 py-4 text-sm font-medium text-paper"
+            >
+              <span class="absolute inset-0 translate-y-full rounded-full bg-bronze transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-y-0"></span>
+              <span class="relative z-10 transition-colors group-hover/btn:text-ink">Request Consultation</span>
+              <span class="relative z-10 transition-all group-hover/btn:translate-x-1 group-hover/btn:text-ink">
+                <Icon name="arrow-right" class="size-4" />
+              </span>
+            </button>
+          </form>
+
+          <!-- success state -->
+          <div data-contact-success class="hidden flex-col items-center py-16 text-center">
+            <span class="grid size-16 place-items-center rounded-full bg-bronze/15 text-bronze-dark">
+              <Icon name="check" class="size-8" stroke={2} />
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-charcoal">Thank you!</h3>
+            <p class="mt-2 max-w-sm text-smoke">
+              Your request has been received. Our team will reach out within one business day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const success = document.querySelector("[data-contact-success]");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    form.classList.add("hidden");
+    success?.classList.remove("hidden");
+    success?.classList.add("flex");
+    success?.animate(
+      [
+        { opacity: 0, transform: "translateY(16px)" },
+        { opacity: 1, transform: "none" },
+      ],
+      { duration: 600, easing: "cubic-bezier(0.16,1,0.3,1)" }
+    );
+  });
+</script>

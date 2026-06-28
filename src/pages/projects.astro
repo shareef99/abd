@@ -1,0 +1,142 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import CTA from "../components/sections/CTA.astro";
+import Icon from "../components/ui/Icon.astro";
+import { projects } from "../lib/content";
+
+const filters = [
+  { key: "all", label: "All Projects" },
+  { key: "Residential", label: "Residential" },
+  { key: "Commercial", label: "Commercial" },
+];
+---
+
+<Base title="Projects — NZ Constructions">
+  <PageHeader
+    eyebrow="Our Portfolio"
+    crumb="Projects"
+    title="A portfolio built on trust."
+    sub="200+ homes and a growing collection of commercial landmarks across Hyderabad. Explore a selection of the spaces we've designed and delivered."
+  />
+
+  <section class="section !pt-4">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <!-- filter bar -->
+      <div
+        data-reveal
+        class="mb-12 flex flex-wrap items-center gap-2 border-b border-charcoal/10 pb-6"
+      >
+        {
+          filters.map((f, i) => (
+            <button
+              type="button"
+              data-filter={f.key}
+              class:list={[
+                "rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300",
+                i === 0 ? "bg-charcoal text-paper" : "text-smoke hover:bg-charcoal/5 hover:text-charcoal",
+              ]}
+            >
+              {f.label}
+            </button>
+          ))
+        }
+        <span class="ml-auto hidden text-sm text-smoke sm:block">
+          <span data-count-visible>{projects.length}</span> projects
+        </span>
+      </div>
+
+      <!-- grid -->
+      <div data-grid class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          projects.map((p) => (
+            <article
+              data-type={p.type}
+              data-tilt="5"
+              class="group relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-charcoal shadow-luxe"
+            >
+              <img
+                src={p.image}
+                alt={`${p.name} — ${p.category} in ${p.location}`}
+                loading="lazy"
+                class="absolute inset-0 size-full scale-105 object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
+              <div class="absolute left-4 top-4 flex gap-2">
+                <span
+                  class:list={[
+                    "rounded-full px-3 py-1.5 text-xs font-medium",
+                    p.type === "Residential" ? "bg-azure/85 text-white" : "bg-bronze/90 text-ink",
+                  ]}
+                >
+                  {p.type}
+                </span>
+                <span class="rounded-full glass-dark px-3 py-1.5 text-xs font-medium text-paper">
+                  {p.year}
+                </span>
+              </div>
+              <div class="absolute inset-x-0 bottom-0 p-6 text-paper">
+                <p class="eyebrow text-bronze-light">{p.category}</p>
+                <h3 class="mt-2 font-display text-2xl leading-tight">{p.name}</h3>
+                <p class="mt-1.5 flex items-center gap-1.5 text-sm text-paper/70">
+                  <Icon name="pin" class="size-3.5 text-bronze-light" />
+                  {p.location}
+                </p>
+                <p class="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-paper/0 transition-all duration-500 group-hover:max-h-32 group-hover:text-paper/75">
+                  {p.description}
+                </p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <p data-empty class="hidden py-20 text-center text-smoke">No projects in this category yet.</p>
+    </div>
+  </section>
+
+  <CTA title="Let's add yours to the list." sub="Whether it's a family home or a commercial development, we'd love to help you build it." />
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const cards = document.querySelectorAll<HTMLElement>("[data-grid] [data-type]");
+  const counter = document.querySelector("[data-count-visible]");
+  const empty = document.querySelector("[data-empty]");
+
+  function apply(filter: string) {
+    let visible = 0;
+    const shown: HTMLElement[] = [];
+    cards.forEach((card) => {
+      const show = filter === "all" || card.dataset.type === filter;
+      card.classList.toggle("hidden", !show);
+      if (show) {
+        visible++;
+        shown.push(card);
+      }
+    });
+    shown.forEach((card, i) => {
+      card.animate(
+        [
+          { opacity: 0, transform: "translateY(18px) scale(0.98)" },
+          { opacity: 1, transform: "none" },
+        ],
+        { duration: 520, delay: i * 45, easing: "cubic-bezier(0.16,1,0.3,1)", fill: "backwards" }
+      );
+    });
+    if (counter) counter.textContent = String(visible);
+    empty?.classList.toggle("hidden", visible !== 0);
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => {
+        b.classList.remove("bg-charcoal", "text-paper");
+        b.classList.add("text-smoke");
+      });
+      btn.classList.add("bg-charcoal", "text-paper");
+      btn.classList.remove("text-smoke");
+      apply(btn.dataset.filter || "all");
+    });
+  });
+</script>

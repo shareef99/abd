@@ -1,0 +1,24 @@
+---
+import { marqueeWords } from "../../lib/content";
+const items = [...marqueeWords, ...marqueeWords];
+---
+
+<section class="relative border-y border-charcoal/10 bg-cream/60 py-6 sm:py-8">
+  <div class="flex w-max animate-marquee marquee-mask items-center gap-8 will-change-transform sm:gap-12">
+    {
+      items.map((w) => (
+        <div class="flex items-center gap-8 sm:gap-12">
+          <span class="font-display text-3xl italic tracking-tight text-charcoal/80 sm:text-5xl">
+            {w}
+          </span>
+          <svg viewBox="0 0 24 24" class="size-4 shrink-0 text-bronze sm:size-5" aria-hidden="true">
+            <path
+              d="M12 2 14 10 22 12 14 14 12 22 10 14 2 12 10 10Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+      ))
+    }
+  </div>
+</section>

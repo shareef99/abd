@@ -1,0 +1,55 @@
+---
+import Icon from "../ui/Icon.astro";
+import { whyChoose } from "../../lib/content";
+---
+
+<section id="why" class="section relative overflow-hidden">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.4fr] lg:gap-20">
+      <!-- sticky heading -->
+      <div class="lg:sticky lg:top-32 lg:h-fit">
+        <p data-reveal class="eyebrow text-bronze-dark">{whyChoose.eyebrow}</p>
+        <h2 data-split class="mt-5 font-display display-md text-charcoal">{whyChoose.title}</h2>
+        <p data-reveal data-reveal-delay="0.1" class="mt-6 max-w-md text-pretty text-smoke">
+          {whyChoose.intro}
+        </p>
+        <div
+          data-reveal
+          data-reveal-delay="0.2"
+          class="mt-10 flex items-center gap-5 rounded-3xl border border-charcoal/10 bg-paper/60 p-5"
+        >
+          <div class="font-display text-5xl text-gradient-bronze">15+</div>
+          <p class="text-sm leading-snug text-smoke">
+            Years turning blueprints into buildings across <span class="text-charcoal">Hyderabad</span>.
+          </p>
+        </div>
+      </div>
+
+      <!-- feature grid -->
+      <div data-reveal-stagger class="grid gap-4 sm:grid-cols-2">
+        {
+          whyChoose.items.map((item, i) => (
+            <article
+              data-tilt="6"
+              class="group relative overflow-hidden rounded-3xl border border-charcoal/10 bg-paper/70 p-7 transition-colors duration-500 hover:border-bronze/40"
+            >
+              <div class="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-bronze/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+              <div class="flex items-center justify-between">
+                <span class="grid size-13 place-items-center rounded-2xl bg-charcoal text-paper transition-colors duration-500 group-hover:bg-bronze">
+                  <Icon name={item.icon} class="size-6" />
+                </span>
+                <span class="font-display text-3xl text-charcoal/10">0{i + 1}</span>
+              </div>
+              <h3 class="mt-6 font-display text-xl text-charcoal">{item.title}</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-smoke">{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .size-13 { width: 3.25rem; height: 3.25rem; }
+</style>

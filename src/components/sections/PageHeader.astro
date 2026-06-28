@@ -1,0 +1,43 @@
+---
+import Icon from "../ui/Icon.astro";
+interface Props {
+  eyebrow: string;
+  title: string;
+  sub?: string;
+  crumb: string;
+}
+const { eyebrow, title, sub, crumb } = Astro.props;
+---
+
+<header
+  data-hero
+  class="relative overflow-hidden px-5 pt-40 pb-20 sm:px-8 sm:pt-48 sm:pb-28"
+>
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_50%_-10%,#fbf9f4,#f5f2ea_50%,#ece5d8)]"></div>
+  <div
+    class="pointer-events-none absolute -right-32 top-10 size-[36rem] rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.16),transparent_60%)]"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -left-32 top-40 size-[30rem] rounded-full bg-[radial-gradient(circle,rgba(47,127,214,0.10),transparent_60%)]"
+  >
+  </div>
+
+  <div class="mx-auto max-w-7xl">
+    <nav data-hero-fade class="flex items-center gap-2 text-sm text-smoke">
+      <a href="/" class="transition-colors hover:text-charcoal">Home</a>
+      <Icon name="arrow-right" class="size-3.5 text-bronze" />
+      <span class="text-charcoal">{crumb}</span>
+    </nav>
+
+    <p data-hero-fade class="eyebrow mt-8 text-bronze-dark">{eyebrow}</p>
+    <h1 data-split data-hero class="mt-5 max-w-4xl font-display display-lg text-charcoal">
+      {title}
+    </h1>
+    {sub && (
+      <p data-hero-fade class="mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-smoke">
+        {sub}
+      </p>
+    )}
+  </div>
+</header>

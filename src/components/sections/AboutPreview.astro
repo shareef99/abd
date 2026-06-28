@@ -1,0 +1,84 @@
+---
+import Icon from "../ui/Icon.astro";
+import Button from "../ui/Button.astro";
+import { about } from "../../lib/content";
+---
+
+<section class="section relative overflow-hidden" data-parallax-scope>
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <!-- image collage -->
+      <div class="relative">
+        <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-luxe" data-reveal-clip>
+          <img
+            src="/images/projects/luxury-living.jpg"
+            alt="A premium interior crafted by NZ Constructions"
+            loading="lazy"
+            class="absolute inset-0 size-[115%] object-cover"
+            data-parallax-img
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent"></div>
+        </div>
+
+        <!-- floating secondary image -->
+        <div
+          class="absolute -bottom-8 -right-4 hidden aspect-square w-44 overflow-hidden rounded-3xl border-4 border-ivory shadow-luxe sm:block"
+          data-parallax="1.4"
+        >
+          <img
+            src="/images/ambient/blueprint.jpg"
+            alt="Architectural planning"
+            loading="lazy"
+            class="size-full object-cover"
+          />
+        </div>
+
+        <!-- floating stat chip -->
+        <div
+          class="absolute -left-4 top-8 flex items-center gap-3 rounded-2xl glass px-4 py-3 shadow-luxe"
+          data-parallax="0.8"
+        >
+          <span class="grid size-10 place-items-center rounded-full bg-charcoal text-bronze-light">
+            <Icon name="badge" class="size-5" />
+          </span>
+          <div class="leading-tight">
+            <div class="font-display text-xl text-charcoal">15+ yrs</div>
+            <div class="text-[0.65rem] uppercase tracking-wider text-smoke">of trust</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- content -->
+      <div>
+        <p data-reveal class="eyebrow text-bronze-dark">{about.eyebrow}</p>
+        <h2 data-split class="mt-5 font-display display-md text-charcoal">
+          We design spaces, you live the dream.
+        </h2>
+        <p data-reveal data-reveal-delay="0.1" class="mt-6 text-pretty text-lg leading-relaxed text-smoke">
+          {about.who}
+        </p>
+
+        <div data-reveal-stagger class="mt-9 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-charcoal/10 bg-paper/60 p-5">
+            <div class="flex items-center gap-2 text-bronze-dark">
+              <Icon name="compass" class="size-5" />
+              <h3 class="font-display text-lg text-charcoal">Our Mission</h3>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-smoke">{about.mission}</p>
+          </div>
+          <div class="rounded-2xl border border-charcoal/10 bg-paper/60 p-5">
+            <div class="flex items-center gap-2 text-bronze-dark">
+              <Icon name="sparkle" class="size-5" />
+              <h3 class="font-display text-lg text-charcoal">Our Vision</h3>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-smoke">{about.vision}</p>
+          </div>
+        </div>
+
+        <div data-reveal class="mt-9">
+          <Button href="/about" label="More about us" variant="primary" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

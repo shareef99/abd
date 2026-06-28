@@ -1,0 +1,60 @@
+---
+/**
+ * NZ Constructions wordmark — custom three-tower mark (a refined nod to the
+ * logo skyline) + lockup. Crisp at any size, themable for light/dark surfaces.
+ */
+interface Props {
+  variant?: "dark" | "light"; // text color: dark = on light bg, light = on dark bg
+  markOnly?: boolean;
+  class?: string;
+}
+const { variant = "dark", markOnly = false, class: className = "" } = Astro.props;
+const textColor = variant === "dark" ? "text-charcoal" : "text-paper";
+const subColor = variant === "dark" ? "text-smoke" : "text-paper/55";
+// Gradient reads well on light surfaces; on dark use a solid bright gold for contrast.
+const accentClass = variant === "dark" ? "text-gradient-bronze" : "text-bronze-light";
+const uid = "lg" + Math.random().toString(36).slice(2, 8);
+---
+
+<a href="/" class={`group inline-flex items-center gap-3 ${className}`} aria-label="NZ Constructions — home">
+  <svg viewBox="0 0 48 48" class="size-9 shrink-0" fill="none" aria-hidden="true">
+    <defs>
+      <linearGradient id={`${uid}-a`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cda972"></stop>
+        <stop offset="1" stop-color="#876a3c"></stop>
+      </linearGradient>
+      <linearGradient id={`${uid}-b`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2f7fd6"></stop>
+        <stop offset="1" stop-color="#1c4fa3"></stop>
+      </linearGradient>
+    </defs>
+    <!-- left tower -->
+    <rect x="6.5" y="18" width="9" height="24" rx="1.2" fill={`url(#${uid}-b)`} opacity="0.92"></rect>
+    <g stroke="white" stroke-width="1.1" opacity="0.8">
+      <path d="M8 22h6M8 26h6M8 30h6M8 34h6M8 38h6"></path>
+    </g>
+    <!-- right tower -->
+    <rect x="32.5" y="22" width="9" height="20" rx="1.2" fill="#16150f" opacity="0.9"></rect>
+    <g stroke="#cda972" stroke-width="1.1" opacity="0.85">
+      <path d="M34 26h6M34 30h6M34 34h6M34 38h6"></path>
+    </g>
+    <!-- center tower (tallest, bronze) -->
+    <rect x="17.5" y="6" width="13" height="36" rx="1.4" fill={`url(#${uid}-a)`}></rect>
+    <g stroke="#16150f" stroke-width="1.2" opacity="0.55">
+      <path d="M20 12h8M20 16h8M20 20h8M20 24h8M20 28h8M20 32h8M20 36h8"></path>
+    </g>
+    <!-- ground -->
+    <path d="M4 43.2h40" stroke="#cda972" stroke-width="2" stroke-linecap="round"></path>
+  </svg>
+
+  {!markOnly && (
+    <span class="flex flex-col leading-none">
+      <span class={`font-display text-[1.18rem] font-medium tracking-tight ${textColor}`}>
+        NZ <span class={accentClass}>Constructions</span>
+      </span>
+      <span class={`mt-1 text-[0.55rem] font-medium uppercase tracking-[0.28em] ${subColor}`}>
+        Floor Plans · Building Designs
+      </span>
+    </span>
+  )}
+</a>

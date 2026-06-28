@@ -1,0 +1,144 @@
+---
+import HeroScene from "../react/HeroScene.tsx";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import { hero, stats } from "../../lib/content";
+
+const stages = [
+  { icon: "floorplan", label: "Design" },
+  { icon: "elevation", label: "Plan" },
+  { icon: "crane", label: "Build" },
+];
+---
+
+<section
+  data-hero
+  class="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-28 pb-44 sm:pt-32"
+>
+  <!-- backdrop -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_70%_10%,#fbf9f4_0%,#f5f2ea_45%,#ece5d8_100%)]"></div>
+
+  <!-- 3D scene (right-weighted on desktop) -->
+  <div data-hero-scene class="absolute inset-y-0 right-0 -z-10 w-full lg:w-[60%]">
+    <div class="absolute left-1/2 top-1/2 size-[55vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.28),transparent_70%)] blur-2xl"></div>
+    <HeroScene client:only="react" />
+  </div>
+
+  <!-- readability scrim over the scene on the left -->
+  <div
+    class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-ivory)_8%,transparent_55%)] lg:bg-[linear-gradient(90deg,var(--color-ivory)_22%,transparent_60%)]"
+  >
+  </div>
+
+  <!-- floating Design / Plan / Build rail -->
+  <div
+    class="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-1 rounded-full glass p-2 shadow-luxe xl:flex"
+  >
+    {
+      stages.map((s) => (
+        <div data-hero-chip class="group flex flex-col items-center gap-1 rounded-full px-3.5 py-3">
+          <span class="grid size-9 place-items-center rounded-full bg-charcoal/5 text-bronze-dark transition-colors group-hover:bg-bronze group-hover:text-paper">
+            <Icon name={s.icon} class="size-[1.1rem]" />
+          </span>
+          <span class="text-[0.6rem] font-medium uppercase tracking-[0.18em] text-smoke">{s.label}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <div
+        data-hero-fade
+        class="inline-flex items-center gap-2.5 rounded-full glass px-4 py-2 text-bronze-dark shadow-luxe"
+      >
+        <span class="relative flex size-2">
+          <span class="absolute inline-flex size-full animate-ping rounded-full bg-bronze opacity-60"></span>
+          <span class="relative inline-flex size-2 rounded-full bg-bronze"></span>
+        </span>
+        <span class="eyebrow !tracking-[0.22em]">{hero.eyebrow}</span>
+      </div>
+
+      <h1 class="mt-7 font-display display-xl text-charcoal">
+        {
+          hero.headlineLines.map((line, i) => (
+            <span
+              data-split
+              data-hero
+              class="block"
+              style={i === 1 ? "color:var(--color-charcoal)" : ""}
+            >
+              {i === 2 ? (
+                <span class="text-gradient-bronze">{line}</span>
+              ) : (
+                line
+              )}
+            </span>
+          ))
+        }
+      </h1>
+
+      <p data-hero-fade class="mt-7 max-w-xl text-pretty text-base leading-relaxed text-smoke sm:text-lg">
+        {hero.sub}
+      </p>
+
+      <div data-hero-fade class="mt-9 flex flex-wrap items-center gap-3">
+        <Button href={hero.ctaPrimary.href} label={hero.ctaPrimary.label} variant="primary" />
+        <Button
+          href={hero.ctaSecondary.href}
+          label={hero.ctaSecondary.label}
+          variant="outline"
+          icon="arrow-up-right"
+        />
+        <a
+          href="/projects"
+          data-cursor
+          class="group ml-1 flex items-center gap-3 text-sm font-medium text-charcoal"
+        >
+          <span
+            class="relative grid size-12 place-items-center rounded-full border border-charcoal/15 transition-colors group-hover:border-bronze"
+          >
+            <span class="absolute inset-0 animate-pulse-ring rounded-full border border-bronze/50"></span>
+            <Icon name="play" class="size-4 translate-x-px text-bronze-dark" />
+          </span>
+          <span class="uppercase tracking-[0.18em] text-smoke transition-colors group-hover:text-charcoal"
+            >Watch Showreel</span
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- stats bar -->
+  <div class="absolute inset-x-0 bottom-6 z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
+    <div
+      data-hero-fade
+      class="grid grid-cols-2 gap-px overflow-hidden rounded-3xl glass-dark text-paper shadow-luxe-dark md:grid-cols-4"
+    >
+      {
+        stats.map((s) => (
+          <div class="flex items-center gap-4 bg-ink/10 px-5 py-5 sm:px-7">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full bg-paper/10 text-bronze-light">
+              <Icon name={s.icon} class="size-5" />
+            </span>
+            <div>
+              <div class="font-display text-2xl leading-none sm:text-3xl">
+                <span data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</span>
+              </div>
+              <div class="mt-1.5 text-[0.7rem] uppercase tracking-[0.14em] text-paper/55">
+                {s.label}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- scroll cue -->
+  <div
+    data-hero-fade
+    class="pointer-events-none absolute bottom-[8.5rem] left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-smoke lg:flex"
+  >
+  </div>
+</section>

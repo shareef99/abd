@@ -1,0 +1,77 @@
+---
+import Icon from "../ui/Icon.astro";
+
+const steps = [
+  {
+    icon: "floorplan",
+    title: "Design",
+    body: "Architectural floor plans, 3D elevations and space planning shaped around how you live.",
+  },
+  {
+    icon: "ruler",
+    title: "Plan",
+    body: "Approvals, transparent budgeting, material selection and a milestone-driven schedule.",
+  },
+  {
+    icon: "crane",
+    title: "Build",
+    body: "Premium-quality construction with dedicated site management and weekly progress updates.",
+  },
+  {
+    icon: "badge",
+    title: "Handover",
+    body: "Finishing, quality inspection and a smooth, on-time handover of the keys to your space.",
+  },
+];
+---
+
+<section class="relative overflow-hidden bg-ink py-24 text-paper sm:py-32">
+  <div class="grain pointer-events-none absolute inset-0 opacity-20"></div>
+  <div
+    class="pointer-events-none absolute left-1/4 top-0 size-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(47,127,214,0.16),transparent_60%)]"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute bottom-0 right-0 size-[40rem] translate-x-1/3 rounded-full bg-[radial-gradient(circle,rgba(176,141,87,0.18),transparent_60%)]"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p data-reveal class="eyebrow text-bronze-light">How we work</p>
+        <h2 data-split class="mt-5 max-w-xl font-display display-md">
+          From first sketch to final key.
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="0.1" class="max-w-sm text-pretty text-paper/55">
+        One accountable team for the entire journey — no handoffs, no surprises, just a calm,
+        predictable build.
+      </p>
+    </div>
+
+    <div class="relative mt-16">
+      <!-- connecting line -->
+      <div
+        class="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-paper/20 to-transparent lg:block"
+      >
+      </div>
+      <div data-reveal-stagger class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          steps.map((s, i) => (
+            <div data-tilt="6" class="group relative rounded-3xl glass-dark p-7">
+              <div class="flex items-center justify-between">
+                <span class="grid size-14 place-items-center rounded-full bg-paper/10 text-bronze-light ring-1 ring-paper/10 transition-colors duration-500 group-hover:bg-bronze group-hover:text-ink">
+                  <Icon name={s.icon} class="size-6" />
+                </span>
+                <span class="font-display text-5xl text-paper/10">0{i + 1}</span>
+              </div>
+              <h3 class="mt-6 font-display text-2xl">{s.title}</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-paper/55">{s.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
